@@ -53,8 +53,6 @@ int main()
     else {
         std::cout << "File 'in.txt' not found!\n";
     }
-
-    std::cout << "Hello World!\n";
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
