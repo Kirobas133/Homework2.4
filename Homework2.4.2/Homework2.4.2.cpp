@@ -4,9 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <string>
 
 class Adress {
-public:
+private:
     std::string city;
     std::string street;
     int house;
@@ -19,7 +20,28 @@ public:
         house = 0;
         appartment = 0;
     }
-
+    /*Adress(std::string city, std::string street, int house, int appartment) {
+        this->city = city;
+        this->street = street;
+        this->house = house;
+        this->appartment = appartment;
+    }*/
+    void Adress_changing(std::string city, std::string street, int house, int appartment) {
+        this->city = city;
+        this->street = street;
+        this->house = house;
+        this->appartment = appartment;
+    }
+    std::string Adress_output() {
+        std::string Out_string;
+        Out_string = city + ", " + street + ", "
+            + std::to_string(house) + ", "
+            + std::to_string(appartment) + "\n";
+        return Out_string;
+    }
+    std::string get_city() {
+        return city;
+    }
 };
 
 int main()
@@ -32,19 +54,25 @@ int main()
 
     if (ifs) {
         ifs >> N;
+        std::string temp_city;
+        std::string temp_street;
+        int temp_house;
+        int temp_appartment;
         Adress* adresslist = new Adress[N];
         for (int i = 0; i < N; i++) {
-            ifs >> adresslist[i].city;
-            ifs >> adresslist[i].street;
-            ifs >> adresslist[i].house;
-            ifs >> adresslist[i].appartment;
+            ifs >> temp_city;
+            ifs >> temp_street;
+            ifs >> temp_house;
+            ifs >> temp_appartment;
+            adresslist[i].Adress_changing(temp_city, temp_street, temp_house, temp_appartment);
         }
         ifs.close();
 
         Adress temp;
+        std::string temp2_city, temp3_city;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < (N - i - 1); j++) {
-                if (adresslist[j].city > adresslist[j + 1].city) {
+                if (adresslist[j].get_city() > adresslist[j + 1].get_city()) {
                     temp = adresslist[j];
                     adresslist[j] = adresslist[j + 1];
                     adresslist[j + 1] = temp;
@@ -56,10 +84,11 @@ int main()
         std::ofstream ofs("out.txt");
         ofs << N << std::endl;
         for (int i = 0; i < N; i++) {
-            ofs << adresslist[i].city << ", "
-                << adresslist[i].street << ", "
-                << adresslist[i].house << ", "
-                << adresslist[i].appartment << std::endl;
+            /* ofs << adresslist[i].city << ", "
+                 << adresslist[i].street << ", "
+                 << adresslist[i].house << ", "
+                 << adresslist[i].appartment << std::endl;*/
+            ofs << adresslist[i].Adress_output();
         }
         delete[] adresslist;
     }
